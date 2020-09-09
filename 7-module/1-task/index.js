@@ -8,26 +8,21 @@ export default class RibbonMenu {
     this.chooseCategoryOnClick();
   }
 
-  // метод по отрисовки ленты меню
   createRibbonMenu(categories) {
 
-    // создаем корневой элемент 
     let ribbon = document.createElement('div');
     ribbon.classList.add('ribbon');
 
-    // создаем стрелочку слева
     let arrowLeft = `
       <button class='ribbon__arrow ribbon__arrow_left'>
         <img src='/assets/images/icons/angle-icon.svg' alt='icon'>
       </button>`;
-    ribbon.insertAdjacentHTML('afterbegin', arrowLeft); // prev
+    ribbon.insertAdjacentHTML('afterbegin', arrowLeft);
 
-    // создаем внутренний контейнер для ленты меню
     let ribbonInner = document.createElement('nav');
     ribbonInner.classList.add('ribbon__inner');
     ribbon.appendChild(ribbonInner);
 
-    // создаем наполнение ленты меню
     categories.forEach((category) => {
       let menuLink = `
         <a href='#' class='ribbon__item' data-id='${category.id}'>${category.name}</a>`;
@@ -35,7 +30,6 @@ export default class RibbonMenu {
       ribbonInner.insertAdjacentHTML('beforeend', menuLink);
     });
 
-    // создаем стрелочку справа 
     let arrowRight = `
       <button class='ribbon__arrow ribbon__arrow_right ribbon__arrow_visible'>
         <img src='/assets/images/icons/angle-icon.svg' alt='icon'>
@@ -45,7 +39,6 @@ export default class RibbonMenu {
     return ribbon;
   }
 
-  // метод для листания ленты меню
   scrollOnClick() {
     let ribbonInner = this.elem.querySelector('.ribbon__inner');
     let prev = this.elem.querySelector('.ribbon__arrow_left');
@@ -57,9 +50,9 @@ export default class RibbonMenu {
       let scrollLeft = ribbonInner.scrollLeft;
 
       if (scrollLeft === 0) {
-        prev.classList.remove('ribbon__arrow_visible'); // remove
+        prev.classList.remove('ribbon__arrow_visible');
       }
-      next.classList.add('ribbon__arrow_visible'); // add
+      next.classList.add('ribbon__arrow_visible');
     });
 
     next.addEventListener('click', () => {
@@ -71,13 +64,12 @@ export default class RibbonMenu {
       let scrollRight = scrollWidth - scrollLeft - clientWidth;
 
       if (scrollRight < 1) {
-        next.classList.remove('ribbon__arrow_visible'); // remove
+        next.classList.remove('ribbon__arrow_visible');
       }
-      prev.classList.add('ribbon__arrow_visible'); // add
+      prev.classList.add('ribbon__arrow_visible');
     });
   }
 
-  // метод для подсветки + выбора категории
   chooseCategoryOnClick() {
     let container = this.elem.querySelector('.ribbon__inner');
     let highlighted;
