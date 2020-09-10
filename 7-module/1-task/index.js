@@ -4,7 +4,12 @@ export default class RibbonMenu {
   constructor(categories) {
     this.categories = categories;
     this.elem = this.createRibbonMenu(categories);
-    this.scrollOnClick();
+
+    let prev = this.elem.querySelector('.ribbon__arrow_left');
+    let next = this.elem.querySelector('.ribbon__arrow_right');
+    prev.addEventListener('click', () => this.prevScrollOnClick());
+    next.addEventListener('click', () => this.nextScrollOnClick());
+
     this.chooseCategoryOnClick();
   }
 
@@ -39,35 +44,39 @@ export default class RibbonMenu {
     return ribbon;
   }
 
-  scrollOnClick() {
+  // метод для листания ленты меню влево
+  prevScrollOnClick() {
     let ribbonInner = this.elem.querySelector('.ribbon__inner');
     let prev = this.elem.querySelector('.ribbon__arrow_left');
     let next = this.elem.querySelector('.ribbon__arrow_right');
 
-    prev.addEventListener('click', () => {
-      ribbonInner.scrollBy(-350, 0);
+    ribbonInner.scrollBy(-350, 0);
 
-      let scrollLeft = ribbonInner.scrollLeft;
+    let scrollLeft = ribbonInner.scrollLeft;
 
-      if (scrollLeft === 0) {
-        prev.classList.remove('ribbon__arrow_visible');
-      }
-      next.classList.add('ribbon__arrow_visible');
-    });
+    if (scrollLeft === 0) {
+      prev.classList.remove('ribbon__arrow_visible'); // remove
+    }
+    next.classList.add('ribbon__arrow_visible'); // add
+  }
 
-    next.addEventListener('click', () => {
-      ribbonInner.scrollBy(350, 0);
+  // метод для листания ленты меню вправо
+  nextScrollOnClick() {
+    let ribbonInner = this.elem.querySelector('.ribbon__inner');
+    let prev = this.elem.querySelector('.ribbon__arrow_left');
+    let next = this.elem.querySelector('.ribbon__arrow_right');
 
-      let scrollWidth = ribbonInner.scrollWidth;
-      let scrollLeft = ribbonInner.scrollLeft;
-      let clientWidth = ribbonInner.clientWidth;
-      let scrollRight = scrollWidth - scrollLeft - clientWidth;
+    ribbonInner.scrollBy(350, 0);
 
-      if (scrollRight < 1) {
-        next.classList.remove('ribbon__arrow_visible');
-      }
-      prev.classList.add('ribbon__arrow_visible');
-    });
+    let scrollWidth = ribbonInner.scrollWidth;
+    let scrollLeft = ribbonInner.scrollLeft;
+    let clientWidth = ribbonInner.clientWidth;
+    let scrollRight = scrollWidth - scrollLeft - clientWidth;
+
+    if (scrollRight < 1) {
+      next.classList.remove('ribbon__arrow_visible'); // remove
+    }
+    prev.classList.add('ribbon__arrow_visible'); // add
   }
 
   chooseCategoryOnClick() {
