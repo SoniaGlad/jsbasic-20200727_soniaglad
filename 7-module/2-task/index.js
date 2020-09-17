@@ -58,7 +58,6 @@ export default class Modal {
     let container = this.elem.querySelector('.modal__inner');
 
     container.addEventListener('click', (event) => {
-
       if (event.target.closest('.modal__close')) {
         this.close();
       }
